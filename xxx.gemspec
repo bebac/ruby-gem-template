@@ -1,4 +1,4 @@
-require File.dirname(__FILE__)+"/lib/version"
+require File.dirname(__FILE__)+"/lib/xxx/version"
 
 GEMSPEC = Gem::Specification.new do |s|   
   s.name         = 'xxx'

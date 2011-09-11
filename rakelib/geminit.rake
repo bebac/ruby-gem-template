@@ -1,9 +1,9 @@
 require 'fileutils'
 
-def file_sub!(filename, *subs)
+def file_gsub!(filename, *subs)
 	s = File.read(filename)
 	subs.each do |sub|
-		s.sub! sub[0], sub[1]		
+		s.gsub! sub[0], sub[1]		
 	end
 	File.open(filename, "w+") do |file|
 		file.write(s)
@@ -18,10 +18,11 @@ task :geminit, :name do |t, args|
 	mod_name = args[:name].gsub(" ", "")
 
 	File.rename "xxx.gemspec", "#{gem_name}.gemspec"
+	File.rename "lib/xxx", "lib/#{gem_name}"
 
-	file_sub! "#{gem_name}.gemspec", [/xxx/, "#{gem_name}"], [/Xxx/, "#{mod_name}"]
-	file_sub! "Rakefile", [/xxx.gemspec/, "#{gem_name}.gemspec"]
-	file_sub! "lib/version.rb", [/Xxx/, mod_name]
+	file_gsub! "#{gem_name}.gemspec", [/xxx/, "#{gem_name}"], [/Xxx/, "#{mod_name}"]
+	file_gsub! "Rakefile", [/xxx.gemspec/, "#{gem_name}.gemspec"]
+	file_gsub! "lib/#{gem_name}/version.rb", [/Xxx/, mod_name]
 
 	File.open("README.md", "w+") do |file|
 		header = args[:name]
